@@ -574,9 +574,18 @@ namespace Mono.Nat.Upnp
 									this.controlUrl = controlUrl.Substring(u.GetLeftPart(UriPartial.Authority).Length);
 									NatUtility.Log("{0}: New control url: {1}", HostEndPoint, controlUrl);
 								}
+								else {
+									if (!this.controlUrl.StartsWith("/")) {
+										this.controlUrl = "/" + this.controlUrl;
+									}
+									NatUtility.Log("{0}: Assuming control Uri is relative: {1}", HostEndPoint, controlUrl);
+								}
 							}
 							catch
 							{
+								if (!this.controlUrl.StartsWith("/")) {
+									this.controlUrl = "/" + this.controlUrl;
+								}
 								NatUtility.Log("{0}: Assuming control Uri is relative: {1}", HostEndPoint, controlUrl);
 							}
 							NatUtility.Log("{0}: Handshake Complete", HostEndPoint);
